@@ -17,7 +17,6 @@ namespace UltraEngine::Utilities::Shader::Internal
 		shared_ptr<CompilationResult> _lastCompilationResult;
 	public:
 		vector<WString> Parents;
-		vector<WString> Includes;
 
 		ShaderFile(WString source, WString target) : _source(source), _target(target)
 		{
@@ -40,11 +39,15 @@ namespace UltraEngine::Utilities::Shader::Internal
 
 		bool ContainsResource(WString file)
 		{
-			auto it = find(Includes.begin(), Includes.end(), file);
-
-			if (it != Includes.end())
+			if (_lastCompilationResult != NULL)
 			{
-				return true;
+				auto includes = _lastCompilationResult->GetIncludedFiles();
+				auto it = find(includes.begin(), includes.end(), file);
+
+				if (it != includes.end())
+				{
+					return true;
+				}
 			}
 
 			return false;

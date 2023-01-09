@@ -121,7 +121,7 @@ shared_ptr<UltraEngine::Utilities::Shader::CompilationResult> UltraEngine::Utili
 
 bool UltraEngine::Utilities::Shader::ShaderCompiler::IsShaderFile(WString extension)
 {
-	return ext_to_shader_kind.find(extension.Lower()) != ext_to_shader_kind.end();
+	return ext_to_shader_kind.find(extension.Lower()) != ext_to_shader_kind.end() || extension == "glsl";
 }
 
 shared_ptr<UltraEngine::Utilities::Shader::ShaderCompiler> UltraEngine::Utilities::Shader::CreateShaderCompiler()
