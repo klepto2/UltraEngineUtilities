@@ -41,14 +41,16 @@ vector<WString> UltraEngine::Utilities::Shader::CompilationResult::GetIncludedFi
 
 UltraEngine::Utilities::Shader::ShaderCompiler::ShaderCompiler()
 {
-	_compilerOptions.SetLimit(shaderc_limit_max_draw_buffers, 255);
-	_compilerOptions.SetOptimizationLevel(shaderc_optimization_level_zero);
-	_compilerOptions.SetTargetSpirv(shaderc_spirv_version_1_6);
+	
 }
 
 shared_ptr<UltraEngine::Utilities::Shader::CompilationResult> UltraEngine::Utilities::Shader::ShaderCompiler::Compile(WString sourcepath, WString targetpath)
 {
 	vector<WString> includes;
+	CompileOptions _compilerOptions;
+	_compilerOptions.SetLimit(shaderc_limit_max_draw_buffers, 255);
+	_compilerOptions.SetOptimizationLevel(shaderc_optimization_level_zero);
+	_compilerOptions.SetTargetSpirv(shaderc_spirv_version_1_6);
 	_compilerOptions.SetIncluder(std::make_unique<ShaderFileCollector>(ExtractDir(sourcepath).ToString(), includes));
 
 	if (FileType(sourcepath) == 0)
@@ -90,6 +92,11 @@ shared_ptr<UltraEngine::Utilities::Shader::CompilationResult> UltraEngine::Utili
 shared_ptr<UltraEngine::Utilities::Shader::CompilationResult> UltraEngine::Utilities::Shader::ShaderCompiler::Preprocess(WString sourcepath)
 {
 	vector<WString> includes;
+
+	CompileOptions _compilerOptions;
+	_compilerOptions.SetLimit(shaderc_limit_max_draw_buffers, 255);
+	_compilerOptions.SetOptimizationLevel(shaderc_optimization_level_zero);
+	_compilerOptions.SetTargetSpirv(shaderc_spirv_version_1_6);
 	_compilerOptions.SetIncluder(std::make_unique<ShaderFileCollector>(ExtractDir(sourcepath).ToString(), includes));
 
 	if (FileType(sourcepath) == 0)
@@ -110,6 +117,11 @@ shared_ptr<UltraEngine::Utilities::Shader::CompilationResult> UltraEngine::Utili
 	}
 
 	return CompilationResult::Create(shaderc_compilation_status_success, "", includes);
+}
+
+bool UltraEngine::Utilities::Shader::ShaderCompiler::IsShaderFile(WString extension)
+{
+	return ext_to_shader_kind.find(extension.Lower()) != ext_to_shader_kind.end();
 }
 
 shared_ptr<UltraEngine::Utilities::Shader::ShaderCompiler> UltraEngine::Utilities::Shader::CreateShaderCompiler()

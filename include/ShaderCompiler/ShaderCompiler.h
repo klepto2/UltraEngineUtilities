@@ -53,8 +53,6 @@ namespace UltraEngine::Utilities::Shader
         // The shaderc compiler object.
         Compiler _compiler;
 
-        // The options to use when compiling shaders.
-        CompileOptions _compilerOptions;
 
         inline static std::unordered_map<std::wstring, shaderc_shader_kind> ext_to_shader_kind = {
     {L"vert", shaderc_shader_kind::shaderc_glsl_vertex_shader},
@@ -75,6 +73,8 @@ namespace UltraEngine::Utilities::Shader
         // Preprocesses the shader at the given source path.
         // Returns a CompilationResult object containing information about the preprocessing.
         shared_ptr<CompilationResult> Preprocess(WString sourcepath);
+
+        bool IsShaderFile(WString extension);
     };
 
     // Creates and returns a new ShaderCompiler object.
