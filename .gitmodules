@@ -1,0 +1,7 @@
+[submodule "external/submodules/scintilla"]
+	path = external/submodules/scintilla
+	url = https://github.com/missdeer/scintilla.git
+	branch = master
+[submodule "external/submodules/lexilla"]
+	path = external/submodules/lexilla
+	url = https://github.com/ScintillaOrg/lexilla.git
